@@ -1,1 +1,20 @@
+# Tomcat
+server:
+  tomcat:
+    uri-encoding: UTF-8
+    max-threads: 1000
+    min-spare-threads: 30
+  port: 8016
+  servlet:
+    context-path: /wyj
 
+spring:
+  #??rabbitMq ???
+  rabbitmq:
+    host: 112.124.33.103
+    port: 5672
+    username: guest
+    password: guest
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher

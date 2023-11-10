@@ -1,4 +1,4 @@
-package com.bou.wyj.consumer;
+package com.bou.wyj.consumer.direct;
 
 import org.springframework.amqp.rabbit.annotation.RabbitHandler;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
