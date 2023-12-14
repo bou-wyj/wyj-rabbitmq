@@ -14,7 +14,7 @@ public class DelayQueueConfig {
     public static final String DLX_EXCHANGE = "dlxExchange";   // 死信交换机
     public static final String DLX_ROUTING_KEY = "dlx";  // 死信队列路由
     public static final String NOR_ROUTING_KEY = "normal";  // 普通队列路由
-    public static final Integer TTL_TIME  = 10000*180;  // 延迟时间
+    public static final Integer TTL_TIME  = 3000;  // 延迟时间毫秒
 
     @Bean
     public DirectExchange normalExchange() {

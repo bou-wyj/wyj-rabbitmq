@@ -1,8 +1,18 @@
 package com.bou.wyj;
 
+import cn.hutool.json.JSONUtil;
+import com.alibaba.fastjson.JSONObject;
+import com.bou.wyj.entity.DeviceEntity;
+import com.bou.wyj.entity.TransPojo;
+import com.bou.wyj.redis.RedisCache;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import javax.annotation.Resource;
+import java.time.LocalDateTime;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -60,5 +70,33 @@ class WyjRabbitmqApplicationTests {
         }
         matcher.appendTail(sb);
         return sb.toString();
+    }
+
+    @Resource
+    private RedisCache redisCache;
+
+    @Test
+    void test1() throws JsonProcessingException {
+        // new DeviceEntity().getTransMap();
+
+        String deviceStr = "{\"id\":\"56\",\"createUser\":null,\"updateUser\":\"10017\"" +
+                ",\"isDelete\":false,\"name\":\"三号厂双鱼座边缘计算\",\"deviceSn\":\"02700123072400010090\",\"deviceCode\":\"21tbOvo9BEespa0mswQBpnY0a6xiA1Vg\"" +
+                ",\"deviceCodeUrl\":null,\"cameraCode\":\"a885d575-753aee02\",\"timePayment\":1,\"status\":true,\"deviceModeType\":1,\"storeId\":\"10001\",\"shopId\":\"10017\",\"siteId\":\"11\"" +
+                ",\"runStatus\":6,\"minprogramCodeUrl\":\"/uploads/minprogram/20231213/SJDg43Hr6YtNalHN_share_image.jpg\",\"minprogramCode\":\"giahh7z3TzPnKQ3h\",\"paymentCode\":\"ceYwj0nU9ZJDuzDv\"" +
+                ",\"paymentCodeUrl\":\"/device/payment/17024307095219554.png\",\"isReset\":true,\"valVer\":\"20231025\",\"shareProportion\":10,\"isRun\":true,\"payTypes\":\"[1]\",\"isCarStop\":false" +
+                ",\"isQueue\":0 }\n";
+
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        DeviceEntity deviceEntity = objectMapper.readValue(deviceStr, DeviceEntity.class);
+        deviceEntity.setCreateTime(LocalDateTime.now());
+        deviceEntity.setUpdateTime(LocalDateTime.now());
+
+
+        // redisCache.set("test" , deviceEntity);
+        // DeviceEntity testDevice = (DeviceEntity) redisCache.get("test");
+        DeviceEntity testDevice = redisCache.getCacheObject("test");
+        System.out.println("testDevice = " + testDevice);
+        System.out.println("testDevice = " + testDevice.getCreateTime());
     }
 }

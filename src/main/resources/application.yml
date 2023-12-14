@@ -9,12 +9,41 @@ server:
     context-path: /wyj
 
 spring:
-  #??rabbitMq ???
   rabbitmq:
-    host: 112.124.33.103
+    host: 47.101.164.146
     port: 5672
-    username: guest
-    password: guest
+    username: admin
+    password: 2t26Ez5b
+    listener:
+      simple:
+        retry:
+          enabled: true # 开启消费者失败重试
+          initial-interval: 1000 # 初始失败等待时长
+          multiplier: 1 # 失败的等待时长倍数
+          max-attempts: 3 # 最大重试次数
+          stateless: true # 如果业务中包含事务为false有状态
+  redis:
+    # 地址
+    host: 47.101.164.146
+    # 端口  默认为6379
+    port: 6379
+    # 数据库索引
+    database: 2
+    # 密码
+    password: tbb888
+    # 连接超时时间
+    timeout: 6000s
+    lettuce:
+      pool:
+        # 连接池中的最小空闲连接
+        min-idle: 0
+        # 连接池中的最大空闲连接
+        max-idle: 8
+        # 连接池的最大数据库连接数
+        max-active: 8
+        # #连接池最大阻塞等待时间（使用负值表示没有限制）
+        max-wait: -1ms
+
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher
